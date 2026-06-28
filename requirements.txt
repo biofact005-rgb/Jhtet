@@ -1,0 +1,9 @@
+pyTelegramBotAPI
+Flask
+flask-socketio
+Flask-Cors
+fpdf
+pymongo
+certifi
+urllib3
+requests

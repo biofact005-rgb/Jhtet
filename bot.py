@@ -438,28 +438,11 @@ def delete_item():
     except: return jsonify({"error": "DB Error"})
 
 
+
 # ==========================================
 # 🚀 RUN
 # ==========================================
 if __name__ == "__main__":
-    import time
-    import os
-    
-    # Railway automatically 'PORT' environment variable deta hai
-    port = int(os.environ.get("PORT", 5000))
-    
-    bot.remove_webhook()
-    time.sleep(1)
-    
-    clean_url = WEB_APP_URL.rstrip("/")
-    webhook_url = f"{clean_url}/{BOT_TOKEN}"
-    
-    try:
-        bot.set_webhook(url=webhook_url)
-        print(f"✅ Webhook setup complete! Telegram is connected.")
-    except Exception as e:
-        print(f"❌ Webhook Error: {e}")
-    
-    # Port variable yahan daal do
-    socketio.run(app, host="0.0.0.0", port=port, allow_unsafe_werkzeug=True)
-    
+    t = threading.Thread(target=lambda: socketio.run(app, host="0.0.0.0", port=int(os.environ.get("PORT", 5000)), allow_unsafe_werkzeug=True))
+    t.start()
+    bot.infinity_polling()
